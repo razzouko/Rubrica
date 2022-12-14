@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ValoracioComponent } from './projecte/components/valoracio/valoracio.component';
 import { CriteriComponent } from './projecte/components/criteri/criteri.component';
+import { RubricaComponent } from './projecte/components/rubrica/rubrica.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ValoracioComponent,
-    CriteriComponent
+    CriteriComponent,
+    RubricaComponent
   ],
   imports: [
     BrowserModule,

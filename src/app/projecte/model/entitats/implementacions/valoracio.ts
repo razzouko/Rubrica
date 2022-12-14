@@ -1,4 +1,3 @@
-import { retry } from "rxjs";
 import { ivaloracio } from "../interficies/ivaloracio";
 import { criteri } from "./criteri";
 
