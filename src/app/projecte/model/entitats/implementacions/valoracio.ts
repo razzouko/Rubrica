@@ -5,6 +5,7 @@ export class valoracio implements ivaloracio<criteri>{
 
     titol!: string;
     array_criteris: criteri[] = new Array<criteri>;
+    numero!: number;
 
     constructor(titol: string){
         this.titol = titol;
