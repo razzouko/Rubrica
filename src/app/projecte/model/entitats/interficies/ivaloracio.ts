@@ -1,11 +1,7 @@
 
-import { icriteri } from "./icriteri";
-
-export interface ivaloracio<T extends icriteri> {
+export interface ivaloracio {
 
     titol : string;
     numero : number;
-    array_criteris : Array<T>; 
-
 
 }

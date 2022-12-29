@@ -1,24 +1,19 @@
-import { VirtualTimeScheduler } from "rxjs";
 import { icriteri } from "../interficies/icriteri";
+import { valoracio } from "./valoracio";
 
-export class criteri implements icriteri{
+export class criteri implements icriteri<valoracio>{
    
-     numero!: number;
      titol!: string;
+     valoracions!: valoracio[];
 
-    constructor(titol : string , numero : number ){
-
+    constructor(titol : string  ){
         this.titol = titol;
-        this.numero = numero;
     }
 
     getTitol(){
         return this.titol;
     }
 
-    getNumero(){
-        return this.numero;
-    }
 
 
 }

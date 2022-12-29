@@ -1,1 +1,26 @@
-<p>criteri works!</p>
+
+<form [formGroup]="formRubrica" (ngSubmit)="guardarCriteris()">
+
+  <button (click)="mostrar(false , true)"> Creació criteris </button>
+  <button [disabled]="this.hihanCriteris()" (click)="mostrar(true , false)"> Afegir valoracions </button>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+    <div name="creacio-criteris">
+      <label> Titol criteri <input type="text" > </label>
+    </div>
+
+
+  <div name="creacio-valoracions" hidden = "true">
+    <label> Valoracions </label>
+    <div *ngFor="let criteri of criteris().controls; let j = index " [formGroupName] = "j">
+      <label> Titol criteri <label formControlName="titolCriteri"></label></label> 
+      <button (click)="afegirValoracio('titolCriteri')" >Afegir Valoracio</button>
+    </div>
+    <button type="button"> Finalitzar Valoracions </button>
+  </div>
+</form>
