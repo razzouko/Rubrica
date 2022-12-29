@@ -2,7 +2,7 @@ import { ivaloracio } from "./ivaloracio";
 
 export interface icriteri <T extends ivaloracio>{
 
-    titol : string;  
+    titolCriteri : string;  
     valoracions : Array<T>;
 
 }

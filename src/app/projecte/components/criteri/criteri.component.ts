@@ -8,8 +8,8 @@ import { FormBuilder, FormGroup, FormArray ,Validators, FormControl } from '@ang
 })
 export class CriteriComponent implements OnInit {
 
-  formRubrica!: FormGroup;
-  creacioCriteris : boolean = false;
+  formCriteri!: FormGroup;
+  creacioCriteris : boolean = true;
   creacioValoracions : boolean = false;
 
   
@@ -18,57 +18,38 @@ export class CriteriComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.formRubrica = this.fb.group({
-      titolRubrica: new FormControl('Rubrica') ,
-      criteris : this.fb.array([])
+    this.formCriteri = this.fb.group({
+      titolCriteri : ['' , Validators.required],
+      valoracions : this.fb.array([])
     })
   }
 
-  afegirCriteri(){
-    this.criteris().push(this.nouCriteri());
+
+  afegirValoracio(){
+    this.valoracions().push(this.novaValoracio());
   }
 
-  afegirValoracio(nomCriteri : string){ 
-    // acabar de definir
-    let valoracions = this.criteris().get("criteri1")?.get("valoracions") as FormArray;
-    valoracions.push(this.novaValoracio());
-  }
-
-  nouCriteri() : FormGroup{
-    return this.fb.group({
-      titolCriteri: new FormControl('Nom Criteri'),
-      valoracions : this.fb.array([])
-    });
-  }
 
   novaValoracio() : FormGroup{
     return this.fb.group({
-      titolValoracio : ['TitolValoracio' , Validators.required],
-      numero : 0
-    })
+      titolValoracio : ['' , Validators.required],
+      numero : ['' , Validators.required] //  es guarda en format string, al construir la classe es fa el parse a number
+    });
   }
 
-  criteris(){
-    return this.formRubrica.get("criteris") as FormArray; //  pot donar problemes de al intentar accedir als seus valors
+  valoracions(){
+    return this.formCriteri.get("valoracions") as FormArray; //  pot donar problemes de al intentar accedir als seus valors
   }
 
-  valoracions(index : number){
-    return this.criteris().at(index).get("valoracions") as FormArray;
-  }
 
-  guardarCriteris(){
-    console.log("hola");
+  guardarCriteri(){
+    let formobj = { 
+                    titol : this.formCriteri.value.titolCriteri, 
+                    valors : this.formCriteri.value.valoracions
+                  };
+    localStorage.setItem(formobj.titol , JSON.stringify(formobj.valors));
+    window.location.reload();
   }
-
-  hihanCriteris(){
-    return (this.criteris().length == 0) ? true: false;
-  }
-
-  mostrar(valoracions : boolean , criteris : boolean){
-    this.creacioValoracions = valoracions;
-    this.creacioCriteris = criteris;
-  }
-
 
 
 }

@@ -1,7 +1,7 @@
 
 export interface ivaloracio {
 
-    titol : string;
+    titolValoracio : string;
     numero : number;
 
 }

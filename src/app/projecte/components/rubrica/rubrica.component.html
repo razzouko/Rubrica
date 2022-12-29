@@ -1,1 +1,10 @@
-<p>rubrica works!</p>
+
+<div *ngFor="let criteri of this.criteris; let i = index">
+    <label> {{criteri.titolCriteri}} </label>
+    <div *ngFor="let valoracio of criteri.valoracions; let i = index">
+        <label> {{valoracio.titolValoracio}} </label>
+        <label> {{valoracio.numero}} </label>
+    </div>
+    <br>
+    <br>
+</div>
