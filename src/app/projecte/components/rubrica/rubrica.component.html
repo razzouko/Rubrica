@@ -1,10 +1,16 @@
+<h1>Rúbrica</h1>
 
-<div *ngFor="let criteri of this.criteris; let i = index">
-    <label> {{criteri.titolCriteri}} </label>
-    <div *ngFor="let valoracio of criteri.valoracions; let i = index">
-        <label> {{valoracio.titolValoracio}} </label>
-        <label> {{valoracio.numero}} </label>
-    </div>
-    <br>
-    <br>
-</div>
+<table *ngFor="let criteri of criteris; let i = index">
+    <tr>
+        <td><b>{{criteri.titolCriteri}}</b></td>
+        <td *ngFor="let num of valoracionsNumDiff ; let i = index">
+           <span *ngIf="criteri.valoracioPerNumero(num).numero != -1" [ngClass]="esSeleccionat(criteri.titolCriteri , num) ? 'selec' : ''" (click)="seleccionarValoracio(criteri.titolCriteri , criteri.valoracioPerNumero(num).numero)"> 
+            {{criteri.valoracioPerNumero(num).numero}} : {{criteri.valoracioPerNumero(num).titolValoracio}} 
+           </span>
+        </td>
+    </tr>
+</table>
+
+<button (click)="sumarEleccions()" >Enviar</button>
+
+<p> {{this.sumaEleccions[0]}} / {{this.sumaEleccions[1]}}</p>

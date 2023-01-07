@@ -1,0 +1,15 @@
+table,th , td{
+    border : 1px solid black
+}
+
+td{
+    width: 200px;
+}
+
+.noselec{
+    background-color: yellow;
+}
+
+.selec{
+    background-color: green;
+}
