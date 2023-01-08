@@ -2,19 +2,19 @@
 <h1> Crecio criteris </h1>
 
 
-<form [formGroup]="formCriteri" (ngSubmit)="guardarCriteri()">
-   <input type="text" formControlName="titolCriteri" placeholder="Titol criteri" class="input">
+  <form [formGroup]="formCriteri" (ngSubmit)="guardarCriteri()">
+    <input type="text" formControlName="titolCriteri" placeholder="Titol criteri" class="input">
 
 
-    <div name="creacio-valoracions" formArrayName="valoracions" >
-      <div *ngFor="let valoracio of this.valoracions().controls; let i = index;">
-        <div [formGroupName]="i" >
-          <label> Titol valoracio <input type="text" formControlName="titolValoracio" class="titolValoracio"> </label>
-          <label> Numero valoracio <input type="text" formControlName="numero" class="numeroValoracio"> </label>
+      <div name="creacio-valoracions" formArrayName="valoracions" >
+        <div *ngFor="let valoracio of this.valoracions().controls; let i = index;">
+          <div [formGroupName]="i" >
+            <label> Titol valoració <input type="text" formControlName="titolValoracio" class="titolValoracio"> </label>
+            <label> Número valoració <input type="text" formControlName="numero" class="numeroValoracio"> </label>
+          </div>
         </div>
       </div>
-    </div>
-    <button type="button" (click)="afegirValoracio()" class="button-4">Afegir Valoracio</button>
-    <button type="submit" class="button-4" style="background-color: lightgreen">Guardar</button>
+      <button type="button" (click)="afegirValoracio()" class="button-4">Afegir Valoracio</button>
+      <button type="submit" class="button-4" style="background-color: lightgreen">Guardar</button>
 
-</form>
+  </form>

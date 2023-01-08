@@ -1,16 +1,21 @@
 <h1>Rúbrica</h1>
 
-<table *ngFor="let criteri of criteris; let i = index">
-    <tr>
-        <td><b>{{criteri.titolCriteri}}</b></td>
-        <td *ngFor="let num of valoracionsNumDiff ; let i = index">
-           <span *ngIf="criteri.valoracioPerNumero(num).numero != -1" [ngClass]="esSeleccionat(criteri.titolCriteri , num) ? 'selec' : ''" (click)="seleccionarValoracio(criteri.titolCriteri , criteri.valoracioPerNumero(num).numero)"> 
-            {{criteri.valoracioPerNumero(num).numero}} : {{criteri.valoracioPerNumero(num).titolValoracio}} 
-           </span>
-        </td>
-    </tr>
-</table>
 
-<button (click)="sumarEleccions()" >Enviar</button>
+<div *ngIf="this.hiHanDades">
+    <table *ngFor="let criteri of criteris; let i = index">
+        <tr>
+            <td><b>{{criteri.titolCriteri}}</b></td>
+            <td *ngFor="let num of valoracionsNumDiff ; let i = index">
+            <span *ngIf="criteri.valoracioPerNumero(num).numero != -1" [ngClass]="esSeleccionat(criteri.titolCriteri , num) ? 'selec' : ''" (click)="seleccionarValoracio(criteri.titolCriteri , criteri.valoracioPerNumero(num).numero)"> 
+                {{criteri.valoracioPerNumero(num).numero}} : {{criteri.valoracioPerNumero(num).titolValoracio}} 
+            </span>
+            </td>
+        </tr>
+    </table>
 
-<p> {{this.sumaEleccions[0]}} / {{this.sumaEleccions[1]}}</p>
+    <button (click)="calcularResultat()" >Enviar</button>
+
+    <p *ngIf="this.mostrarResultat"> El resultat es: {{this.sumaEleccions[0]}} punts sobre {{this.sumaEleccions[1]}}</p>
+</div>
+
+<p *ngIf="!this.hiHanDades">  No hi han dades per mostrar!!! </p>
