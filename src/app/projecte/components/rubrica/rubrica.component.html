@@ -2,12 +2,23 @@
 
 
 <div *ngIf="this.hiHanDades">
-    <table *ngFor="let criteri of criteris; let i = index">
+    <table>
         <tr>
-            <td><b>{{criteri.titolCriteri}}</b></td>
+            <th></th>
+            <h3>VALORACIONS</h3>
+        </tr>
+        <tr>
+            <th>CRITERIS</th>
             <td *ngFor="let num of valoracionsNumDiff ; let i = index">
-            <span *ngIf="criteri.valoracioPerNumero(num).numero != -1" [ngClass]="esSeleccionat(criteri.titolCriteri , num) ? 'selec' : ''" (click)="seleccionarValoracio(criteri.titolCriteri , criteri.valoracioPerNumero(num).numero)"> 
-                {{criteri.valoracioPerNumero(num).numero}} : {{criteri.valoracioPerNumero(num).titolValoracio}} 
+                <b>{{num}} </b>             
+            </td>
+        </tr>
+        <tr *ngFor="let criteri of criteris; let i = index">
+            <td><b>{{criteri.titolCriteri}}</b></td>
+            <td *ngFor="let num of valoracionsNumDiff ; let i = index" [ngClass]="esSeleccionat(criteri.titolCriteri , num) ? 'selec' : 'noselec'"  (click)="seleccionarValoracio(criteri.titolCriteri , criteri.valoracioPerNumero(num).numero)">
+            <span *ngIf="criteri.valoracioPerNumero(num).numero != -1"
+             [ngClass]="esSeleccionat(criteri.titolCriteri , num) ? 'textSelec' : ''"> 
+              {{criteri.valoracioPerNumero(num).titolValoracio}} 
             </span>
             </td>
         </tr>

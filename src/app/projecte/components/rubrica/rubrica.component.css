@@ -1,15 +1,32 @@
-table,th , td{
-    border : 1px solid black
+table, td , th{
+    border : 1px solid black;
+    border-collapse: collapse ;
+    text-align: center;
 }
+
+span {
+    cursor: pointer;
+}
+
 
 td{
     width: 200px;
 }
 
 .noselec{
-    background-color: yellow;
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+.noselec:hover{
+    background-color: grey;
 }
 
 .selec{
+    cursor: pointer;
     background-color: green;
+}
+
+.textSelec{
+    color: white;
 }
