@@ -2,12 +2,11 @@
 <h1> Generació de criteris </h1>
 
 
-  <form [formGroup]="formCriteri" (ngSubmit)="guardarCriteri()">
+  <form [formGroup]="formCriteriNou" (ngSubmit)="guardarCriteri()">
     <input type="text" formControlName="titolCriteri" placeholder="Titol criteri" class="input">
 
-
       <div name="creacio-valoracions" formArrayName="valoracions" >
-        <div *ngFor="let valoracio of this.valoracions().controls; let i = index;">
+        <div *ngFor="let valoracio of this.getValoracionsFromNou().controls; let i = index;">
           <div [formGroupName]="i" >
             <label> Titol valoració <input type="text" formControlName="titolValoracio" class="titolValoracio"> </label>
             <label> Número valoració <input type="text" formControlName="numero" class="numeroValoracio"> </label>
@@ -17,4 +16,24 @@
       <button type="button" (click)="afegirValoracio()" class="button-4">Afegir Valoracio</button>
       <button type="submit" class="button-4" style="background-color: lightgreen">Guardar</button>
 
+  </form>
+
+  <h4>Criteris creats</h4>
+  <button (click)="guardarNousCanvis()"> Guardar nous canvis</button>
+  <form [formGroup]="formCriterisCreats">
+    <div formArrayName="criteris">
+      <div *ngFor="let criteri of this.getCriterisCreats().controls; let i = index;">
+        <div [formGroupName]="i" style="margin: 30px;">
+          <label> Titol criteri: <input type="text" formControlName="titolCriteri"> </label>
+          <div formArrayName="valoracions">
+            <div *ngFor="let valoracio of this.getValoracioPerIndex(i).controls; let j = index">
+              <div [formGroupName]="j">
+                <label> Titol valoració: <input type="text" formControlName="titolValoracio"></label>
+                <label> Valor : <input type="text" formControlName="numero"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </form>

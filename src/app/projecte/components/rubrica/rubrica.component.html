@@ -26,7 +26,7 @@
 
     <button (click)="calcularResultat()" >Enviar</button>
 
-    <p *ngIf="this.mostrarResultat"> El resultat es: {{this.sumaEleccions[0]}} punts sobre {{this.sumaEleccions[1]}}</p>
+    <p *ngIf="this.mostrarResultat"> El resultat es: {{this.getNota(this.sumaEleccions[0] ,this.sumaEleccions[1])}}</p>
 </div>
 
 <p *ngIf="!this.hiHanDades">  No hi han dades per mostrar!!! </p>

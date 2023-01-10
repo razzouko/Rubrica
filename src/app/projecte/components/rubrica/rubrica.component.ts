@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { criteri } from '../../model/entitats/implementacions/criteri';
-import { compareNums } from '../../helps/helpers';
+import { compareNums , objectesDeLocalStorage } from '../../helps/helpers';
 
 @Component({
   selector: 'app-rubrica',
@@ -14,12 +14,11 @@ export class RubricaComponent implements OnInit {
   eleccions = new Map();
   sumaEleccions = [0, 0]; // [suma de les eleccions, suma total]
   mostrarResultat = false;
-  hiHanDades = (Object.keys(localStorage).length > 0) ? true : false ;
+  hiHanDades = (Object.keys(localStorage).length > 0) ? true : false ; // si no hi han dades es mostra un error
 
   constructor() { }
 
   ngOnInit(): void {
-
     this.valoracionsNumDiff = this.obtenirNumerosDiff();
     this.obtenirObjectesCriteri();
     this.iniciarMapa();
@@ -27,7 +26,7 @@ export class RubricaComponent implements OnInit {
 
   obtenirObjectesCriteri() {
 
-    let localStObj = this.objectesDeLocalStorage();
+    let localStObj = objectesDeLocalStorage();
 
     for (let i = 0; i < localStObj.length; i++) {
       let objCriteri = new criteri(<string>localStObj[i][0], localStObj[i][1]); // (titol criteri , valoracions[])
@@ -35,22 +34,8 @@ export class RubricaComponent implements OnInit {
     }
   }
 
-  objectesDeLocalStorage() {
-
-    let values = [];
-    let keys = Object.keys(localStorage);
-    let i = keys.length;
-
-    while (i--) {
-      if (keys[i] !== null) {
-        values.push([keys[i], JSON.parse(<string>localStorage.getItem(keys[i]))]);
-      }
-    }
-    return values;
-  }
-
   obtenirNumerosDiff() {
-    let dadesCriteris = this.objectesDeLocalStorage();
+    let dadesCriteris = objectesDeLocalStorage();
     let diferents: number[] = [];
     for (let i = 0; i < dadesCriteris.length; i++) {
       let valoracions = dadesCriteris[i][1];
@@ -79,6 +64,7 @@ export class RubricaComponent implements OnInit {
     let keys = Object.keys(localStorage);
 
     for (let i = 0; i < keys.length; i++) {
+      if(keys[i] != "xxxXRubricaXxxx")
         this.eleccions.set(keys[i] , -1);
     }
 
@@ -116,7 +102,26 @@ export class RubricaComponent implements OnInit {
       alert("No es pot calcular, falta un criteri per seleccionar")
     }else{
       this.mostrarResultat = true;
+      this.guardarEleccions();
     }
+  }
+
+  guardarEleccions(){
+    let arrEleccions = [];
+    for(let [key ,value] of this.eleccions){
+      arrEleccions.push({
+        titolCriteri : key,
+        numeroValoracio : value
+      })
+    }
+    let clauRubrica ="xxxXRubricaXxxx"; 
+    localStorage.setItem(clauRubrica , JSON.stringify(arrEleccions));
+  }
+
+  getNota(puntuacio : number , total: number){
+    this.sumaEleccions[0] = 0;
+    // al obtenir la nota decimal multipliquem per 10 i per després d'arrodonir divim per 10. D'aquesta forma arrodonim a un únic numero.
+    return Math.round(((puntuacio * 10)/total) * 10) / 10; 
   }
 
 }

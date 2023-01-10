@@ -22,3 +22,16 @@ export function compareNums(a: number, b: number) {
 
 
 }
+
+export function objectesDeLocalStorage() {
+    let values = [];
+    let keys = Object.keys(localStorage);
+    let i = keys.length;
+
+    while (i--) {
+      if (keys[i] !== null && keys[i] != "xxxXRubricaXxxx" ) {
+        values.push([keys[i], JSON.parse(<string>localStorage.getItem(keys[i]))]);
+      }
+    }
+    return values;
+  }

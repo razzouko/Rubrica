@@ -15,16 +15,15 @@ td{
 
 .noselec{
     cursor: pointer;
-    background-color: lightgray;
 }
 
 .noselec:hover{
-    background-color: grey;
+    background-color: lightgrey;
 }
 
 .selec{
     cursor: pointer;
-    background-color: green;
+    background-color: lightgreen;
 }
 
 .textSelec{

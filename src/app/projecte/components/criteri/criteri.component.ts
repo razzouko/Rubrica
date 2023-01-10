@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
-
+import { objectesDeLocalStorage } from '../../helps/helpers';
+import { valoracio } from '../../model/entitats/implementacions/valoracio';
 @Component({
   selector: 'app-criteri',
   templateUrl: './criteri.component.html',
@@ -8,25 +9,43 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
 })
 export class CriteriComponent implements OnInit {
 
-  formCriteri!: FormGroup;
+  formCriteriNou!: FormGroup;
+  formCriterisCreats!: FormGroup
   creacioCriteris: boolean = true;
   creacioValoracions: boolean = false;
-
 
 
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
 
-    this.formCriteri = this.fb.group({
+    this.formCriteriNou = this.fb.group({
       titolCriteri: ['', Validators.minLength(5)],
       valoracions: this.fb.array([])
     })
+
+    this.formCriterisCreats = this.fb.group({
+      criteris: this.fb.array([])
+    })
+
+    this.construirCriterisCreats();
   }
 
+  getCriterisCreats(){
+    return this.formCriterisCreats.get("criteris") as FormArray;
+  }
+
+  getValoracioPerIndex( i : number){
+    console.log(this.getCriterisCreats().at(i).get("valoracions"));
+    return this.getCriterisCreats().at(i).get("valoracions") as FormArray;
+  }
+
+  getValoracionsFromNou() {
+    return this.formCriteriNou.get("valoracions") as FormArray; //  pot donar problemes de al intentar accedir als seus valors
+  }
 
   afegirValoracio() {
-    this.valoracions().push(this.novaValoracio());
+    this.getValoracionsFromNou().push(this.novaValoracio());
   }
 
 
@@ -37,26 +56,69 @@ export class CriteriComponent implements OnInit {
     });
   }
 
-  valoracions() {
-    return this.formCriteri.get("valoracions") as FormArray; //  pot donar problemes de al intentar accedir als seus valors
+  valoracioExistent(titolValoracio: string, numero: number): FormGroup {
+    return this.fb.group({
+      titolValoracio: titolValoracio,
+      numero: numero
+    })
   }
 
+  getCriteriExistent(titolCriteri: string, valoracions: Array<valoracio>): FormGroup {
+    return this.fb.group({
+      titolCriteri: titolCriteri,
+      valoracions: this.fb.array(this.getFormGroupValoracions(valoracions))
+    })
+  }
+
+
+  getFormGroupValoracions(valoracions: Array<valoracio>): Array<FormGroup> {
+    let valoracionsConstruides: Array<FormGroup> = [];
+    valoracions.forEach(element =>
+      valoracionsConstruides.push(this.valoracioExistent(element.titolValoracio, element.numero))
+    );
+    return valoracionsConstruides;
+  }
+
+  construirCriterisCreats() {
+
+    let localObj = objectesDeLocalStorage();
+    let arrCriterisCreats = this.formCriterisCreats.get("criteris") as FormArray;
+    for (let i = 0; i < localObj.length; i++) {
+      let objCriteri = localObj[i];
+      arrCriterisCreats.push(this.getCriteriExistent(objCriteri[0], objCriteri[1]))
+    }
+
+    
+
+  }
 
   guardarCriteri() {
 
-    if(this.formCriteri.invalid){
+    if (this.formCriteriNou.invalid) {
       alert("Hi han camps invalids");
-    }else if(this.formCriteri.value.valoracions.length <= 0){
+    } else if (this.formCriteriNou.value.valoracions.length <= 0) {
       alert("Falten valoracions");
-    }else{
-    let formobj = {
-      titol: this.formCriteri.value.titolCriteri,
-      valors: this.formCriteri.value.valoracions
-    };
-    localStorage.setItem(formobj.titol, JSON.stringify(formobj.valors));
-    window.location.reload();
+    } else {
+      let formobj = {
+        titol: this.formCriteriNou.value.titolCriteri,
+        valors: this.formCriteriNou.value.valoracions
+      };
+      localStorage.setItem(formobj.titol, JSON.stringify(formobj.valors));
+      window.location.reload();
     }
   }
+
+  guardarNousCanvis(){
+    let criterisNous = this.getCriterisCreats();
+    localStorage.clear();
+    for (let i = 0; i < criterisNous.length ; i++) {
+        let criteri = criterisNous.at(i);
+        localStorage.setItem(criteri.value.titolCriteri , JSON.stringify(criteri.value.valoracions))
+    }
+    window.location.reload();
+  }
+
+
 
 
 }
