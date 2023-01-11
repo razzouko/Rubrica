@@ -2,7 +2,7 @@
 <h1> Generació de criteris </h1>
 
 
-  <form [formGroup]="formCriteriNou" (ngSubmit)="guardarCriteri()">
+  <form [formGroup]="formCriteriNou">
     <input type="text" formControlName="titolCriteri" placeholder="Titol criteri" class="input">
 
       <div name="creacio-valoracions" formArrayName="valoracions" >
@@ -14,7 +14,7 @@
         </div>
       </div>
       <button type="button" (click)="afegirValoracio()" class="button-4">Afegir Valoracio</button>
-      <button type="submit" class="button-4" style="background-color: lightgreen">Guardar</button>
+      <button type="button" class="button-4" style="background-color: lightgreen" (click)="guardarCriteri()">Guardar</button>
 
   </form>
 

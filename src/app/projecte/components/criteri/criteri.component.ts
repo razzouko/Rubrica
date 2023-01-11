@@ -19,7 +19,7 @@ export class CriteriComponent implements OnInit {
   ngOnInit(): void {
 
     this.formCriteriNou = this.fb.group({
-      titolCriteri: ['', Validators.minLength(5)],
+      titolCriteri: ['', Validators.minLength(3)],
       valoracions: this.fb.array([])
     })
 
@@ -60,7 +60,7 @@ export class CriteriComponent implements OnInit {
 
   novaValoracio(): FormGroup {
     return this.fb.group({
-      titolValoracio: ['', Validators.minLength(5)],
+      titolValoracio: ['', Validators.minLength(2)],
       numero: ['', Validators.pattern('[0-9]+')] //  es guarda en format string, al construir la classe es fa el parse a number
     });
   }
@@ -113,7 +113,7 @@ export class CriteriComponent implements OnInit {
         valors: this.formCriteriNou.value.valoracions
       };
       localStorage.setItem(formobj.titol, JSON.stringify(formobj.valors));
-      window.location.reload();
+      this.generarNousCriteri()
     }
   }
 
@@ -124,7 +124,20 @@ export class CriteriComponent implements OnInit {
         let criteri = criterisNous.at(i);
         localStorage.setItem(criteri.value.titolCriteri , JSON.stringify(criteri.value.valoracions))
     }
-    window.location.reload();
+     this.generarNousCriteri();
+  }
+
+  generarNousCriteri(){
+    this.formCriteriNou = this.fb.group({
+      titolCriteri: ['', Validators.minLength(3)],
+      valoracions: this.fb.array([])
+    })
+
+    this.formCriterisCreats = this.fb.group({
+      criteris: this.fb.array([])
+    })
+
+    this.construirCriterisCreats();
   }
 
 
