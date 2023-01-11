@@ -11,8 +11,7 @@ export class CriteriComponent implements OnInit {
 
   formCriteriNou!: FormGroup;
   formCriterisCreats!: FormGroup
-  creacioCriteris: boolean = true;
-  creacioValoracions: boolean = false;
+  canvisCriteris = false;
 
 
   constructor(private fb: FormBuilder) { }
@@ -36,16 +35,24 @@ export class CriteriComponent implements OnInit {
   }
 
   getValoracioPerIndex( i : number){
-    console.log(this.getCriterisCreats().at(i).get("valoracions"));
     return this.getCriterisCreats().at(i).get("valoracions") as FormArray;
   }
 
-  getValoracionsFromNou() {
+  getValoracionsFormNou() {
     return this.formCriteriNou.get("valoracions") as FormArray; //  pot donar problemes de al intentar accedir als seus valors
   }
 
+  eliminarValoracioCreada(indexCriteri : number , indexValoracio : number){
+    let valoracions = this.getValoracioPerIndex(indexCriteri);
+    valoracions.removeAt(indexValoracio);
+  }
+
+  eliminarCriteriCreat(indexCriteri : number){
+    this.getCriterisCreats().removeAt(indexCriteri);
+  }
+
   afegirValoracio() {
-    this.getValoracionsFromNou().push(this.novaValoracio());
+    this.getValoracionsFormNou().push(this.novaValoracio());
   }
 
 

@@ -15,6 +15,7 @@ export class RubricaComponent implements OnInit {
   sumaEleccions = [0, 0]; // [suma de les eleccions, suma total]
   mostrarResultat = false;
   hiHanDades = (Object.keys(localStorage).length > 0) ? true : false ; // si no hi han dades es mostra un error
+  hiHanEleccions = (localStorage.getItem("xxxXRubricaXxxx") != null) ? true : false;
 
   constructor() { }
 
@@ -22,6 +23,9 @@ export class RubricaComponent implements OnInit {
     this.valoracionsNumDiff = this.obtenirNumerosDiff();
     this.obtenirObjectesCriteri();
     this.iniciarMapa();
+    if(this.hiHanEleccions){
+      this.carregarEleccions();
+    }
   }
 
   obtenirObjectesCriteri() {
@@ -70,12 +74,27 @@ export class RubricaComponent implements OnInit {
 
   }
 
+ carregarEleccions(){
+      let eleccions = JSON.parse(<string> localStorage.getItem("xxxXRubricaXxxx"));
+      console.log(eleccions);
+      for (let i = 0; i < eleccions.length; i++) {
+        for (let [key, value] of this.eleccions) {
+
+            if(key == eleccions[i].titolCriteri){
+              this.eleccions.set(eleccions[i].titolCriteri , eleccions[i].numeroValoracio);
+            }
+        } 
+      }
+
+    
+  }
+
   seleccionarValoracio(titolCriteri: string, num: number) {
     this.eleccions.set(titolCriteri, num);
+    this.calcularResultat();
   }
 
   esSeleccionat(titolCriteri: string, num: number) {
-
     let seleccio = this.eleccions.get(titolCriteri);
     if (seleccio == num)
       return true;
@@ -98,9 +117,7 @@ export class RubricaComponent implements OnInit {
       this.sumaEleccions[0] += parseInt(numero);
     }
 
-    if(faltaCriteri){
-      alert("No es pot calcular, falta un criteri per seleccionar")
-    }else{
+    if(!faltaCriteri){
       this.mostrarResultat = true;
       this.guardarEleccions();
     }
@@ -123,6 +140,7 @@ export class RubricaComponent implements OnInit {
     // al obtenir la nota decimal multipliquem per 10 i per després d'arrodonir divim per 10. D'aquesta forma arrodonim a un únic numero.
     return Math.round(((puntuacio * 10)/total) * 10) / 10; 
   }
+
 
 }
 

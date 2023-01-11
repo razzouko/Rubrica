@@ -6,7 +6,7 @@
     <input type="text" formControlName="titolCriteri" placeholder="Titol criteri" class="input">
 
       <div name="creacio-valoracions" formArrayName="valoracions" >
-        <div *ngFor="let valoracio of this.getValoracionsFromNou().controls; let i = index;">
+        <div *ngFor="let valoracio of this.getValoracionsFormNou().controls; let i = index;">
           <div [formGroupName]="i" >
             <label> Titol valoració <input type="text" formControlName="titolValoracio" class="titolValoracio"> </label>
             <label> Número valoració <input type="text" formControlName="numero" class="numeroValoracio"> </label>
@@ -19,17 +19,19 @@
   </form>
 
   <h4>Criteris creats</h4>
-  <button (click)="guardarNousCanvis()"> Guardar nous canvis</button>
+  <button *ngIf="this.canvisCriteris"   (click)="guardarNousCanvis()"> Guardar nous canvis</button>
   <form [formGroup]="formCriterisCreats">
     <div formArrayName="criteris">
       <div *ngFor="let criteri of this.getCriterisCreats().controls; let i = index;">
         <div [formGroupName]="i" style="margin: 30px;">
-          <label> Titol criteri: <input type="text" formControlName="titolCriteri"> </label>
+          <label> Titol criteri: <input type="text" formControlName="titolCriteri" (click)="this.canvisCriteris = true"> </label>
+          <button (click)="eliminarCriteriCreat(i)">borrar</button>
           <div formArrayName="valoracions">
             <div *ngFor="let valoracio of this.getValoracioPerIndex(i).controls; let j = index">
               <div [formGroupName]="j">
-                <label> Titol valoració: <input type="text" formControlName="titolValoracio"></label>
-                <label> Valor : <input type="text" formControlName="numero"></label>
+                <label> Titol valoració: <input type="text" formControlName="titolValoracio" (click)="this.canvisCriteris = true"></label>
+                <label> Valor : <input type="text" formControlName="numero" (click)="this.canvisCriteris = true"></label>
+                <button (click)="eliminarValoracioCreada(i,j)">borrar</button>
               </div>
             </div>
           </div>
