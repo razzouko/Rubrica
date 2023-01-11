@@ -45,10 +45,12 @@ export class CriteriComponent implements OnInit {
   eliminarValoracioCreada(indexCriteri : number , indexValoracio : number){
     let valoracions = this.getValoracioPerIndex(indexCriteri);
     valoracions.removeAt(indexValoracio);
+    this.canvisCriteris = true;
   }
 
   eliminarCriteriCreat(indexCriteri : number){
     this.getCriterisCreats().removeAt(indexCriteri);
+    this.canvisCriteris = true;
   }
 
   afegirValoracio() {

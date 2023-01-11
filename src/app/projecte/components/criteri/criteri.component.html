@@ -31,7 +31,7 @@
               <div [formGroupName]="j">
                 <label> Titol valoració: <input type="text" formControlName="titolValoracio" (click)="this.canvisCriteris = true"></label>
                 <label> Valor : <input type="text" formControlName="numero" (click)="this.canvisCriteris = true"></label>
-                <button (click)="eliminarValoracioCreada(i,j)">borrar</button>
+                <button (click)="eliminarValoracioCreada(i,j)" class="eliminar">borrar</button>
               </div>
             </div>
           </div>
